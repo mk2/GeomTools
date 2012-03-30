@@ -1,0 +1,33 @@
+<project name="GeomTools" default="jar" basedir=".">
+
+	<property file="build.properties" />
+
+	<property name="src" value="./src/" />
+	<property name="dest" value="./classes/" />
+	<property name="dist" value="./dist/" />
+
+	<path id="compile.path">
+	</path>
+
+	<target name="init">
+		<mkdir dir="${dest}" />
+		<mkdir dir="${dist}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac includeAntRuntime="no" fork="yes" srcdir="${src}" destdir="${dest}" classpathref="compile.path" />
+		<propertyfile file="${src}com/megaloworks/lib/GeomTools/resource/buildDate.properties">
+			<entry key="buildDate" type="date" value="now" pattern="MMddyyyy" />
+		</propertyfile>
+	</target>
+
+	<target name="jar" depends="clean, compile">
+		<jar jarfile="${dist}GeomTools.jar" basedir="${dest}" excludes="**/*Test.class" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${dest}" />
+		<delete dir="${dist}" />
+	</target>
+
+</project>
